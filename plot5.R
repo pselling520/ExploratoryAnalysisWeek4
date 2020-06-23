@@ -12,3 +12,11 @@ vehicles <- SCC[grep("Vehicles",SCC$EI.Sector),]
 
 #merging data
 combined <- merge(baltimore,vehicles,by="SCC")
+
+g <- ggplot(data=combined, aes(x=as.factor(year),y=Emissions))
+g <- g + geom_col(color="green",fill="green") +
+    labs(x="Year",
+         y="Total Emissions",
+         title="Trending Baltimore Vehicle Emissions")
+
+ggsave(file="plot5.png",g)
