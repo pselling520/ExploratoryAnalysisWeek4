@@ -16,6 +16,7 @@ y1 <- y[2]
 x0 <- 1999
 x1 <- 2008
 
+#plotting 
 dev.new(width=480,height=480,unit="px")
 plot(x,y, main = "Changes in Baltimore Emissions",xlab="Year",ylab="Total Emissions")
 segments(x0,y0,x1,y1)
