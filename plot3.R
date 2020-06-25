@@ -1,13 +1,29 @@
 #libraries
 library(ggplot2)
 library(gridExtra)
+library(reshape2)
 
 #Loading in data
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
-#Restricting to Baltimore in 1999 and 2008
-baltimore <- subset(NEI, fips=="24510" & (year == 1999 | year==2008))
+#Restricting to Baltimore by year
+baltimore <- subset(NEI, fips=="24510")
+bm99 <- subset(NEI, fips=="24510" & year==1999)
+bm02 <- subset(NEI, fips=="24510" & year==2002)
+bm05 <- subset(NEI, fips=="24510" & year==2005)
+bm08 <- subset(NEI, fips=="24510" & year==2008)
+
+#Converting to just sums
+
+
+x <- tapply(baltimore$Emissions,
+            list(as.factor(baltimore$type),
+                 as.factor(baltimore$year)),
+            sum)
+x <- data.frame(x)
+df_names <- c("1999","2002","2005","2008")
+names(x) <- df_names
 
 
 plotPoint <- ggplot(data=subset(baltimore,type=="POINT"),aes(x=as.factor(year),y=Emissions))
